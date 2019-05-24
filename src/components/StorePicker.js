@@ -4,7 +4,8 @@ import {getFunName} from '../helpers';
 class StorePicker extends React.Component {
     gotoStore = (event) => {
         event.preventDefault();
-        console.log(this.storeInput.value);
+        let storeId = this.storeInput.value;
+        this.props.history.push(`/store/${storeId}`);
 
     }
     render() {
@@ -17,5 +18,7 @@ class StorePicker extends React.Component {
         )
     }
 }
+
+
 
 export default StorePicker;
