@@ -8,7 +8,7 @@ import Fish from './Fish';
 class App extends React.Component {
     state = {
         fishes: {},
-        order: {},
+        orders: {},
     }
 
     addFish = (fish) => {
@@ -16,6 +16,12 @@ class App extends React.Component {
         const timeStamp = Date.now();
         fishes[`fish-${timeStamp}`] = fish;
         this.setState({fishes});
+    }
+
+    addOrder = (fish) => {
+        const orders = {...this.state.orders};
+        orders[fish] = orders[fish]+1 || 1;
+        this.setState({orders});
     }
 
     loadSamples = () => {
@@ -33,7 +39,7 @@ class App extends React.Component {
                         {
                             Object
                                 .keys(this.state.fishes)
-                                .map(key => <Fish key={key} details={this.state.fishes[key]} />)
+                                .map(key => <Fish key={key} id={key} addOrder={this.addOrder} details={this.state.fishes[key]} />)
 
                         }
                     </ul>
