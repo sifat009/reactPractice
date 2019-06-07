@@ -3,9 +3,9 @@ import {formatPrice} from '../helpers';
 
 class Order extends React.Component {
     renderOrder = (orderId) => {
-        const fish = this.props.fishes[orderId];
+        const fish = this.props.fishes[orderId];        
         const count = this.props.orders[orderId];
-        if(!fish && fish.status === 'unavailable') {
+        if(!fish) {
             return <li key={orderId}>Sorry, {fish ? fish.name : 'fish'} is no longer available!</li>
         }
         return (
@@ -17,10 +17,11 @@ class Order extends React.Component {
         
     }
     render() {
-        const orderIds = Object.keys(this.props.orders);
+        const orderIds = Object.keys(this.props.orders);        
         const fishes = this.props.fishes;
+        
         const total = orderIds.reduce((prevSum, orderId) => {
-            const fish = fishes[orderId];
+            const fish = fishes[orderId];            
             const count = this.props.orders[orderId];
             const isAvailable = fish && fish.status === 'available';
             if(isAvailable) {

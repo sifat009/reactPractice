@@ -12,11 +12,24 @@ class App extends React.Component {
         orders: {},
     }
 
-    componentWillMount() {
+    shouldComponentUpdate(nextProps, nextState) {
+        localStorage.setItem(`orders-${this.props.match.params.storeId}`, JSON.stringify(nextState.orders));
+        return true;      
+    }
+
+    componentDidMount() {
         this.ref = base.syncState(`${this.props.match.params.storeId}/fishes`, {
             context: this,
             state: 'fishes',
-        })
+        });  
+        
+        const localStorageRef = localStorage.getItem(`orders-${this.props.match.params.storeId}`);
+                
+        if(localStorageRef) {
+            this.setState({
+                orders: JSON.parse(localStorageRef)
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -43,6 +56,7 @@ class App extends React.Component {
     }
 
     render() {
+
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
@@ -56,10 +70,14 @@ class App extends React.Component {
                         }
                     </ul>
                 </div>
-                <Order fishes={this.state.fishes} orders={this.state.orders}/>
+                <Order 
+                    fishes={this.state.fishes}
+                    orders={this.state.orders} 
+                />
                 <Inventory loadSamples={this.loadSamples} addFish={this.addFish}/>
             </div>
         )
+
     }
 }
 
