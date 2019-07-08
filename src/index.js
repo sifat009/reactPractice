@@ -6,6 +6,7 @@ import StorePicker from './components/StorePicker';
 import App from './components/App';
 import NotFound from './components/NotFound';
 import './css/style.css';
+import './css/animation.css';
 
 const Root = () => {
     return (
